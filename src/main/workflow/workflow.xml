@@ -1,0 +1,36 @@
+<workflow-app name='chained-wf' xmlns="uri:oozie:workflow:0.2">
+	<start to='chained' />
+	<action name='chained'>
+		<map-reduce>
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<prepare>
+			</prepare>
+			<configuration>
+				<property>
+					<name>mapred.job.queue.name</name>
+					<value>${queueName}</value>
+				</property>
+				<property>
+					<name>oozie.launcher.action.main.class</name>
+					<value>com.cloudera.example.oozie.CustomLauncher</value>
+				</property>
+				<property>
+					<name>mapred.input.dir</name>
+					<value>${inputDir}</value>
+				</property>
+				<property>
+					<name>mapred.output.dir</name>
+					<value>${outputDir}</value>
+				</property>
+				<property>
+					<name>mapred.reduce.tasks</name>
+					<value>0</value>
+				</property>
+			</configuration>
+		</map-reduce>
+		<ok to='end' />
+		<error to='end' />
+	</action>
+	<end name='end' />
+</workflow-app>
